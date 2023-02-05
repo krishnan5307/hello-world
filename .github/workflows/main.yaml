@@ -100,8 +100,8 @@ jobs:
       aws-region: ${{ secrets.AWS_REGION }}
   - name: Install Utilities
     run: |
-      sudo apt-get update
-      sudo apt-get install -y jq unzip
+      choco update
+      choco install -y jq unzip
   - name: Login to Amazon ECR
     id: login-ecr
     uses: aws-actions/amazon-ecr-login@v1
