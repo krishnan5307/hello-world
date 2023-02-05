@@ -16,11 +16,13 @@ RUN /app/env/bin/python3 -m pip install --upgrade pip
 RUN env/bin/pip install --no-cache-dir -r requirements.txt
 
 # Set the command to run when the container starts
-CMD ["env/bin/gunicorn", "--workers=4", "--bind", "0.0.0.0:$PORT", "app:app"]
+CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
 
 # Run the command as the non-root user
 USER myuser
 
 # Expose the specified port for incoming traffic
 EXPOSE $PORT
+
+
 
