@@ -64,8 +64,8 @@ aws-region: ${{ secrets.AWS_REGION }}
 
 name: Install Utilities
 run: |
-sudo apt-get update
-sudo apt-get install -y jq unzip docker-ce
+  sudo apt-get update
+  sudo apt-get install -y jq unzip docker-ce
 
 name: Login to Amazon ECR
 id: login-ecr
@@ -73,15 +73,15 @@ uses: aws-actions/amazon-ecr-login@v1
 
 name: Pull docker image
 run: |
-docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+  docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
 
 name: Run Docker Image to serve users
 run: |
-export IMAGE_NAME="${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest" && docker run -p 80:80 -d $IMAGE_NAME
+  export IMAGE_NAME="${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest" && docker run -p 80:80 -d $IMAGE_NAME
 
 name: Docker System Prune to Remove Old Images
 run: |
-docker system prune -f --volumes
+  docker system prune -f --volumes
 
 
 
