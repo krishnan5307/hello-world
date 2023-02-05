@@ -1,10 +1,25 @@
-FROM python:3.9
-USER root
-COPY . /app
+# Use an official Python image as the base image
+FROM python:3.9-alpine
+
+# Create a non-root user to run the application
+RUN adduser -D myuser
+
+# Set the working directory in the container to /app
 WORKDIR /app
+
+# Copy the application code to the container
+COPY . .
+
+# Create the virtual environment and install the packages
 RUN python3 -m venv env
-RUN . env/bin/activate
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN env/bin/pip install --no-cache-dir -r requirements.txt
+
+# Set the command to run when the container starts
+CMD ["env/bin/gunicorn", "--workers=4", "--bind", "0.0.0.0:$PORT", "app:app"]
+
+# Run the command as the non-root user
+USER myuser
+
+# Expose the specified port for incoming traffic
 EXPOSE $PORT
-CMD gunicorn --workers=4 --bind 0.0.0.0:$PORT app:app
+
