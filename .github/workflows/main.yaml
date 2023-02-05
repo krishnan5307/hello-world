@@ -116,7 +116,7 @@ jobs:
       $env:AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}"
       $env:AWS_DEFAULT_REGION="${{ secrets.AWS_REGION }}"
       $env:BUCKET_NAME="${{ secrets.BUCKET_NAME }}"
-      docker-compose up -d      
+      docker-compose -f ".github\workflows\docker-compose.yaml" up -d      
   - name: Docker System Prune to Remove Old Images
     run: |
       docker system prune -f
